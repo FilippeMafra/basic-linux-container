@@ -5,12 +5,13 @@ MAINTAINER mafra <sulcmil@gmail.com>
 ENV TERM xterm
 
 ENV USER_UID 1000
+ENV USER_GID 1000
 ENV USER_NAME mafra
 ENV USER_HOME /home/mafra
 
 RUN apk update && \
     apk upgrade && \
-    adduser -D -u $USER_UID $USER_NAME && \
+    adduser -D -u $USER_UID $USER_NAME -g $USER_GID && \
     rm -rf /var/cache/apk/*
 
 CMD ["/bin/sh"]
@@ -28,3 +29,12 @@ RUN apk add --no-cache wget && \
 # asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 RUN sed -i '' "s/plugin\(/plugin\(asdf /g" "~/.zshrc"
+
+# volume base
+RUN cd && \
+    mkdir shared
+
+# ssh
+EXPOSE 22
+
+VOLUME ~/shared
