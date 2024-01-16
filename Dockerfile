@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-MAINTAINER mafra <sulcmil@gmail.com>
+LABEL dev.mafra.image.authors="org@mafra.dev"
 
 ENV TERM xterm
 
@@ -28,7 +28,7 @@ RUN apk add --no-cache wget && \
 
 # asdf
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-RUN sed -i '' "s/plugin\(/plugin\(asdf /g" "~/.zshrc"
+RUN sed "s/plugins=(/plugins=(asdf /g" "/root/.zshrc"
 
 # volume base
 RUN cd && \
